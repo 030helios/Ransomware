@@ -14,9 +14,9 @@ if __name__ == "__main__":
     s.bind(('', port))
     s.listen(5)
 
-    file = open('worm',mode='r')
-    all_of_it = file.read()
     while True:
         conn, addr = s.accept()
+        file = open('worm',mode='r')
+        all_of_it = file.read()
         conn.send(all_of_it.encode())
         conn.close()

